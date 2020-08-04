@@ -525,10 +525,10 @@ if isfield(analysis_data, 'fbuds')
 end
 
 if isfield(analysis_data, 'endosome')
-   
-    for h = 1:length(analysis_data.az)
         
-        for i = 1:length(analysis_data.endosome)
+    for i = 1:length(analysis_data.endosome)
+        
+        for h = 1:length(analysis_data.az)
 
             a=1;
 
@@ -551,16 +551,17 @@ if isfield(analysis_data, 'endosome')
                 end
             end
 
-            distance_data.endosome(i).dist2az(h) = floor(min(temp_distance_1(1:h,:))*pixel_size);
-
-            if distance_data.endosome(i).dist2az(h) < 5
-
-                distance_data.endosome(i).dist2az(h) = 0;
-
-            end
-
-            clear temp_distance_1 
-        end 
+            
+        end
+        distance_data.endosome(i).dist2az = floor(min(temp_distance_1(1:h,:))*pixel_size);
+        
+        if distance_data.endosome(i).dist2az < 5
+            
+            distance_data.endosome(i).dist2az = 0;
+            
+        end
+        
+        clear temp_distance_1
     end
     
     for h = 1:length(analysis_data.pm)
@@ -666,9 +667,9 @@ end
 
 if isfield(analysis_data, 'fendosome')
    
-    for h = 1:length(analysis_data.az)
+    for i = 1:length(analysis_data.fendosome)
         
-        for i = 1:length(analysis_data.fendosome)
+        for h = 1:length(analysis_data.az)
 
             a=1;
 
@@ -691,16 +692,17 @@ if isfield(analysis_data, 'fendosome')
                 end
             end
 
-            distance_data.fendosome(i).dist2az(h) = floor(min(temp_distance_1(1:h,:))*pixel_size);
-
-            if distance_data.fendosome(i).dist2az(h) < 5
-
-                distance_data.fendosome(i).dist2az(h) = 0;
-
-            end
-
-            clear temp_distance_1 
-        end 
+            
+        end
+        distance_data.fendosome(i).dist2az = floor(min(temp_distance_1(1:h,:))*pixel_size);
+        
+        if distance_data.fendosome(i).dist2az < 5
+            
+            distance_data.fendosome(i).dist2az = 0;
+            
+        end
+        
+        clear temp_distance_1
     end
     
     for h = 1:length(analysis_data.pm)
@@ -805,9 +807,9 @@ end
 
 if isfield(analysis_data, 'mvb')
    
-    for h = 1:length(analysis_data.az)
+    for i = 1:length(analysis_data.mvb)
         
-        for i = 1:length(analysis_data.mvb)
+        for h = 1:length(analysis_data.az)
 
             a=1;
 
@@ -830,16 +832,17 @@ if isfield(analysis_data, 'mvb')
                 end
             end
 
-            distance_data.mvb(i).dist2az(h) = floor(min(temp_distance_1(1:h,:))*pixel_size);
-
-            if distance_data.mvb(i).dist2az(h) < 5
-
-                distance_data.mvb(i).dist2az(h) = 0;
-
-            end
-
-            clear temp_distance_1 
-        end 
+            
+        end
+        distance_data.mvb(i).dist2az = floor(min(temp_distance_1(1:h,:))*pixel_size);
+        
+        if distance_data.mvb(i).dist2az < 5
+            
+            distance_data.mvb(i).dist2az = 0;
+            
+        end
+        
+        clear temp_distance_1
     end
     
     for h = 1:length(analysis_data.pm)
@@ -944,9 +947,9 @@ end
 
 if isfield(analysis_data, 'fmvb')
    
-    for h = 1:length(analysis_data.az)
+    for i = 1:length(analysis_data.fmvb)
         
-        for i = 1:length(analysis_data.fmvb)
+        for h = 1:length(analysis_data.az)
 
             a=1;
 
@@ -969,16 +972,17 @@ if isfield(analysis_data, 'fmvb')
                 end
             end
 
-            distance_data.fmvb(i).dist2az(h) = floor(min(temp_distance_1(1:h,:))*pixel_size);
-
-            if distance_data.fmvb(i).dist2az(h) < 5
-
-                distance_data.fmvb(i).dist2az(h) = 0;
-
-            end
-
-            clear temp_distance_1 
-        end 
+            
+        end
+        distance_data.fmvb(i).dist2az = floor(min(temp_distance_1(1:h,:))*pixel_size);
+        
+        if distance_data.fmvb(i).dist2az < 5
+            
+            distance_data.fmvb(i).dist2az = 0;
+            
+        end
+        
+        clear temp_distance_1
     end
     
     for h = 1:length(analysis_data.pm)
