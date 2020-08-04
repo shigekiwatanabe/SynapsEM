@@ -10,7 +10,7 @@ directory_name = uigetdir('/Users/watanabe_lab/Dropbox (Watanabe_lab)/Watanabe_l
 % Choosing the data files using a dialog box
 fprintf ('select all data files');
 [filename] = uigetfile(('*.txt'), 'MultiSelect', 'on',...
-                        'Select all data files', directory_name);
+                        'Select all data files\n', directory_name);
 
                     
                     
