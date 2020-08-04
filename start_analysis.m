@@ -182,7 +182,8 @@ data.vesicle_diameter.coated_fpits.total = average_coated_fpits_diameter (data.r
 data.vesicle_diameter.cumulative = diameter_cumulative (data);
 
 
-disp ('so far so good');
+fprintf ('\n so far so good \n');
+
 
 
 
