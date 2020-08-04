@@ -6,7 +6,7 @@ function analysis_data = import_analysis_data (filename, pixel_size)
 % those structures to the plasma membrane and active zone membranes. 
 
 fid = fopen(filename);
-disp(filename);
+% disp(filename);
 % initialting index values
 a = 1;%variables for ribbon
 a_1 = 1;%variables for dense projection
