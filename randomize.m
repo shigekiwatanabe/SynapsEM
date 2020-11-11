@@ -75,9 +75,9 @@ for i = 1:total_num
     key(i,3) = cellstr(sprintf ('%s%s', name, '.txt'));
     
 end
-
+clear directory ext filename head i name new_directory new_file new_name original_name random_num tail temp_name total_num tf
 %automatically save the workspace (key)
 save (sprintf ('%s/%s', new_directory, 'key.mat'));
 
-clear directory ext filename head i name new_directory new_file new_name original_name random_num tail temp_name total_num tf
+
 
