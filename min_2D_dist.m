@@ -532,22 +532,23 @@ if isfield(analysis_data, 'endosome')
 
             a=1;
 
-            pt(1) = 1;
-            pt(2) = length(analysis_data.endosome(i).x);
-            pt(3) = floor(pt(2)/4);
-            pt(4) = floor(pt(2)*3/4);
-
+%             pt(1) = 1;
+%             pt(2) = length(analysis_data.endosome(i).x);
+%             pt(3) = floor(pt(2)/4);
+%             pt(4) = floor(pt(2)*3/4);
+   
             for j = 1:length(analysis_data.az(h).x)
+                
+                 for l = 1:length(analysis_data.endosome(i).x)
 
-                for k=1:4
-
-                    temp_distance_1(h,a) = dist2(analysis_data.endosome(i).x(pt(k)),...
-                                                 analysis_data.endosome(i).y(pt(k)),...
+                    temp_distance_1(h,a) = dist2(analysis_data.endosome(i).x(l),...
+                                                 analysis_data.endosome(i).y(l),...
                                                  0,...
                                                  analysis_data.az(h).x(j),...
                                                  analysis_data.az(h).y(j));
 
                     a=a+1;
+                    
                 end
             end
 
@@ -570,17 +571,17 @@ if isfield(analysis_data, 'endosome')
 
             a=1;
 
-            pt(1) = 1;
-            pt(2) = length(analysis_data.endosome(i).x);
-            pt(3) = floor(pt(2)/4);
-            pt(4) = floor(pt(2)*3/4);
+%             pt(1) = 1;
+%             pt(2) = length(analysis_data.endosome(i).x);
+%             pt(3) = floor(pt(2)/4);
+%             pt(4) = floor(pt(2)*3/4);
 
             for j = 1:length(analysis_data.pm(h).x)
 
-                for k=1:4
+                for l = 1:length(analysis_data.endosome(i).x)
 
-                    temp_distance_1(h,a) = dist2(analysis_data.endosome(i).x(pt(k)),...
-                                                 analysis_data.endosome(i).y(pt(k)),...
+                    temp_distance_1(h,a) = dist2(analysis_data.endosome(i).x(l),...
+                                                 analysis_data.endosome(i).y(l),...
                                                  0,...
                                                  analysis_data.pm(h).x(j),...
                                                  analysis_data.pm(h).y(j));
@@ -673,17 +674,17 @@ if isfield(analysis_data, 'fendosome')
 
             a=1;
 
-            pt(1) = 1;
-            pt(2) = length(analysis_data.fendosome(i).x);
-            pt(3) = floor(pt(2)/4);
-            pt(4) = floor(pt(2)*3/4);
+%             pt(1) = 1;
+%             pt(2) = length(analysis_data.fendosome(i).x);
+%             pt(3) = floor(pt(2)/4);
+%             pt(4) = floor(pt(2)*3/4);
 
             for j = 1:length(analysis_data.az(h).x)
 
-                for k=1:4
+                for l = 1:length(analysis_data.fendosome(i).x)
 
-                    temp_distance_1(h,a) = dist2(analysis_data.fendosome(i).x(pt(k)),...
-                                                 analysis_data.fendosome(i).y(pt(k)),...
+                    temp_distance_1(h,a) = dist2(analysis_data.fendosome(i).x(l),...
+                                                 analysis_data.fendosome(i).y(l),...
                                                  0,...
                                                  analysis_data.az(h).x(j),...
                                                  analysis_data.az(h).y(j));
@@ -711,17 +712,17 @@ if isfield(analysis_data, 'fendosome')
 
             a=1;
 
-            pt(1) = 1;
-            pt(2) = length(analysis_data.fendosome(i).x);
-            pt(3) = floor(pt(2)/4);
-            pt(4) = floor(pt(2)*3/4);
+%             pt(1) = 1;
+%             pt(2) = length(analysis_data.fendosome(i).x);
+%             pt(3) = floor(pt(2)/4);
+%             pt(4) = floor(pt(2)*3/4);
 
             for j = 1:length(analysis_data.pm(h).x)
 
-                for k=1:4
+                for l = 1:length(analysis_data.fendosome(i).x)
 
-                    temp_distance_1(h,a) = dist2(analysis_data.fendosome(i).x(pt(k)),...
-                                                 analysis_data.fendosome(i).y(pt(k)),...
+                    temp_distance_1(h,a) = dist2(analysis_data.fendosome(i).x(l),...
+                                                 analysis_data.fendosome(i).y(l),...
                                                  0,...
                                                  analysis_data.pm(h).x(j),...
                                                  analysis_data.pm(h).y(j));
@@ -813,17 +814,17 @@ if isfield(analysis_data, 'mvb')
 
             a=1;
 
-            pt(1) = 1;
-            pt(2) = length(analysis_data.mvb(i).x);
-            pt(3) = floor(pt(2)/4);
-            pt(4) = floor(pt(2)*3/4);
+%             pt(1) = 1;
+%             pt(2) = length(analysis_data.mvb(i).x);
+%             pt(3) = floor(pt(2)/4);
+%             pt(4) = floor(pt(2)*3/4);
 
             for j = 1:length(analysis_data.az(h).x)
 
-                for k=1:4
+                for l = 1:length(analysis_data.mvb(i).x)
 
-                    temp_distance_1(h,a) = dist2(analysis_data.mvb(i).x(pt(k)),...
-                                                 analysis_data.mvb(i).y(pt(k)),...
+                    temp_distance_1(h,a) = dist2(analysis_data.mvb(i).x(l),...
+                                                 analysis_data.mvb(i).y(l),...
                                                  0,...
                                                  analysis_data.az(h).x(j),...
                                                  analysis_data.az(h).y(j));
@@ -851,17 +852,13 @@ if isfield(analysis_data, 'mvb')
 
             a=1;
 
-            pt(1) = 1;
-            pt(2) = length(analysis_data.mvb(i).x);
-            pt(3) = floor(pt(2)/4);
-            pt(4) = floor(pt(2)*3/4);
-
+            
             for j = 1:length(analysis_data.pm(h).x)
 
-                for k=1:4
+                for l = 1:length(analysis_data.mvb(i).x)
 
-                    temp_distance_1(h,a) = dist2(analysis_data.mvb(i).x(pt(k)),...
-                                                 analysis_data.mvb(i).y(pt(k)),...
+                    temp_distance_1(h,a) = dist2(analysis_data.mvb(i).x(l),...
+                                                 analysis_data.mvb(i).y(l),...
                                                  0,...
                                                  analysis_data.pm(h).x(j),...
                                                  analysis_data.pm(h).y(j));
@@ -953,17 +950,17 @@ if isfield(analysis_data, 'fmvb')
 
             a=1;
 
-            pt(1) = 1;
-            pt(2) = length(analysis_data.fmvb(i).x);
-            pt(3) = floor(pt(2)/4);
-            pt(4) = floor(pt(2)*3/4);
+%             pt(1) = 1;
+%             pt(2) = length(analysis_data.fmvb(i).x);
+%             pt(3) = floor(pt(2)/4);
+%             pt(4) = floor(pt(2)*3/4);
 
             for j = 1:length(analysis_data.az(h).x)
 
-                for k=1:4
+                for l = 1:length(analysis_data.fmvb(i).x)
 
-                    temp_distance_1(h,a) = dist2(analysis_data.fmvb(i).x(pt(k)),...
-                                                 analysis_data.fmvb(i).y(pt(k)),...
+                    temp_distance_1(h,a) = dist2(analysis_data.fmvb(i).x(l),...
+                                                 analysis_data.fmvb(i).y(l),...
                                                  0,...
                                                  analysis_data.az(h).x(j),...
                                                  analysis_data.az(h).y(j));
@@ -991,17 +988,17 @@ if isfield(analysis_data, 'fmvb')
 
             a=1;
 
-            pt(1) = 1;
-            pt(2) = length(analysis_data.fmvb(i).x);
-            pt(3) = floor(pt(2)/4);
-            pt(4) = floor(pt(2)*3/4);
+%             pt(1) = 1;
+%             pt(2) = length(analysis_data.fmvb(i).x);
+%             pt(3) = floor(pt(2)/4);
+%             pt(4) = floor(pt(2)*3/4);
 
             for j = 1:length(analysis_data.pm(h).x)
 
-                for k=1:4
+                for l = 1:length(analysis_data.fmvb(i).x)
 
-                    temp_distance_1(h,a) = dist2(analysis_data.fmvb(i).x(pt(k)),...
-                                                 analysis_data.fmvb(i).y(pt(k)),...
+                    temp_distance_1(h,a) = dist2(analysis_data.fmvb(i).x(l),...
+                                                 analysis_data.fmvb(i).y(l),...
                                                  0,...
                                                  analysis_data.pm(h).x(j),...
                                                  analysis_data.pm(h).y(j));
