@@ -1,7 +1,8 @@
 %updated 3/15/2017; Written by Morven Chin for Watanabe Lab use
 %for calculating localization of endo/exocytic pits, compatible with
 %analysis data from single section or serial reconstructions images
-%
+%This one does not skip those that do not have pits and place zeros in the
+%rows. 
 %Notes concerning output array: Four consecutive Inf indicates a pit
 %not in AZ. Four consecutive zeros indicates either that a pit has been
 %assigned to another AZ in the same section, or that there is no pit
@@ -11,7 +12,7 @@
 %
 %ANALYZING MULTIPLE AZ WITH 3D RECONSTRUCTION IS BROKEN... DO NOT TRY
 
-function [output_data] = pits_reconstruct(filename, reconstruct_tf, pix_size, sect_thick, height_cut)
+function [output_data] = pits_reconstruct_2(filename, reconstruct_tf, pix_size, sect_thick, height_cut)
 
     mult_az = 1; %defaults # of AZ to 1 
     output_data = struct('PitData', [], 'MiscData', [], 'DockedSVData', []);
@@ -92,7 +93,7 @@ function [output_data] = pits_reconstruct(filename, reconstruct_tf, pix_size, se
     if reconstruct_tf == 1
         
         %if there are missing sections for any reason in a 3D reconstruct
-        missing_tf = ismember(char('e'),char(input('Are there any missing sections? (yes/no)', 's')));
+        missing_tf = ismember(char('y'),char(input('Are there any missing sections? (yes/no)', 's')));
         if missing_tf
             missing_sect = strsplit(input('Separate the numbers of multiple missing sections with whitespace: ', 's'));
         end
@@ -114,7 +115,7 @@ function [output_data] = pits_reconstruct(filename, reconstruct_tf, pix_size, se
         
     %find intersection points of drawn pits with AZ
 
-    a=1; %holds table row number, section number
+   a=1; %holds table row number, section number
     pit_amt = 0; %counts total number of pits
     synapse_count = 0; %holds # of synapses w/ pits
     max_pit = 0; %holds max # of pits in a synapse across all synapses
@@ -274,10 +275,11 @@ function [output_data] = pits_reconstruct(filename, reconstruct_tf, pix_size, se
                
                %closest leg to AZ midpt
                pit_width = filename.raw_data(i).analysis_data.pits(k).neck_width;
-               pit_az_cent = min(xy_dist_1, xy_dist_2)*pix_size;
+               %center of pits to az_midpt
+               pit_az_cent = (min(xy_dist_1, xy_dist_2)*pix_size)+ pit_width/2;
    
                %distance of pit center to the AZ edge 
-               pit_horiz_edge = abs(az_half_length(az_num,i) - pit_az_cent - pit_width/2);
+               pit_horiz_edge = abs(az_half_length(az_num,i) - pit_az_cent);
                xy_dist_norm = pit_horiz_edge/az_half_length(az_num,i);
 
       
@@ -305,14 +307,14 @@ function [output_data] = pits_reconstruct(filename, reconstruct_tf, pix_size, se
                if filename.raw_data(i).distance_data.pits(k).in_az == 1
                    
                    if reconstruct_tf == 0
-                       pit_data(a + az_num - 1,1+(k-1)*5) = min(z_edge_dist,pit_horiz_edge); %xy or z distance from edge of AZ
-                       pit_data(a + az_num - 1,2+(k-1)*5) = pit_az_cent; %distance from center of AZ
-                       pit_data(a + az_num - 1,3+(k-1)*5) = pit_az_cent/(pit_horiz_edge+pit_az_cent); %normalized distance to center
-                       pit_data(a + az_num - 1,4+(k-1)*5) = pit_height;
-                       pit_data(a + az_num - 1,5+(k-1)*5) = side_index; %synchronous or asynchronous pit
+                       pit_data(a,1+(k-1)*5) = min(z_edge_dist,pit_horiz_edge); %xy or z distance from edge of AZ
+                       pit_data(a,2+(k-1)*5) = pit_az_cent; %distance from center of AZ
+                       pit_data(a,3+(k-1)*5) = pit_az_cent/(pit_horiz_edge+pit_az_cent+pit_width); %normalized distance to center
+                       pit_data(a,4+(k-1)*5) = pit_height;
+                       pit_data(a,5+(k-1)*5) = side_index; %synchronous or asynchronous pit
                        
                    else
-                       dist_cent = sqrt((z_cent_dist)^2 + pit_az_cent^2) + pit_width/2;
+                       dist_cent = sqrt((z_cent_dist)^2 + pit_az_cent^2);
                        
                        dist_edge = (dist_cent * z_dist_norm);
                        
@@ -325,11 +327,11 @@ function [output_data] = pits_reconstruct(filename, reconstruct_tf, pix_size, se
                            
                            
                        end
-                       pit_data(a + az_num - 1,1+(k-1)*5) = abs(z_dist-dist_cent); %xy or z distance from edge of AZ
-                       pit_data(a + az_num - 1,2+(k-1)*5) = dist_cent; %distance from center of AZ
-                       pit_data(a + az_num - 1,3+(k-1)*5) = (dist_cent/z_dist)^2; %normalized distance to edge
-                       pit_data(a + az_num - 1,4+(k-1)*5) = pit_height;
-                       pit_data(a + az_num - 1,5+(k-1)*5) = side_index; 
+                       pit_data(a,1+(k-1)*5) = abs(z_dist-dist_cent); %xy or z distance from edge of AZ
+                       pit_data(a,2+(k-1)*5) = dist_cent; %distance from center of AZ
+                       pit_data(a,3+(k-1)*5) = (dist_cent/z_dist)^2; %distance to center, normalized by fractional area
+                       pit_data(a,4+(k-1)*5) = pit_height;
+                       pit_data(a,5+(k-1)*5) = side_index; 
                    end
                    
                    pit_amt = pit_amt + 1;
@@ -338,9 +340,19 @@ function [output_data] = pits_reconstruct(filename, reconstruct_tf, pix_size, se
                end
            end
            
-           a = a + length(filename.raw_data(i).analysis_data.az); %increment the array row counter by the # of AZ in the particular section
+            a = a + 1; %increment the array row counter by the # of AZ in the particular section
            synapse_count = synapse_count + length(filename.raw_data(i).analysis_data.az); %first assume all AZs in this section have pits... if not, will be removed later
-        end      
+        
+%         else
+%             pit_data(a,1) = 0;
+%             pit_data(a,2) = 0; 
+%             pit_data(a,3) = 0; 
+%             pit_data(a,4) = 0;
+%             pit_data(a,5) = 0; 
+%             
+%             a= a+1;
+        end
+       
     end
     
     clear mid_pt
@@ -349,7 +361,7 @@ function [output_data] = pits_reconstruct(filename, reconstruct_tf, pix_size, se
     %runs through output array and removes synapses w/o exocytic events from total count 
     if ~isempty(pit_data)    
         
-        for i = 1:length(pit_data(:,1));
+        for i = 1:length(pit_data(:,1))
             
             has_exo = 0; %does this synapse have exocytic events? set initial to false
             for j = 1:max_pit
